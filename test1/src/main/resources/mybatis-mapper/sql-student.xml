@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.example.test1.mapper.StudentMapper">
+	<select id="selectStudentList" parameterType="hashmap" resultType="com.example.test1.model.Student">
+		SELECT
+			STU_NO,
+			STU_NAME,
+			STU_DEPT,
+			STU_GRADE,
+			STU_CLASS,
+			STU_GENDER,
+			STU_HEIGHT,
+			STU_WEIGHT
+		FROM STUDENT
+	</select>
+	
+	<select id="qwer" parameterType="hashmap" resultType="com.example.test1.model.Student"> <!--1@: id= 다른 이름으로 설정해준다. 2@: 리턴타입이 Studnet-->
+		SELECT * 
+		FROM STUDENT 
+		WHERE STU_NO = '20153075' <!--보통 세미콜론을 붙이지 않는다.-->
+			
+	</select>
+	
+	<select id="selectEmp" parameterType="hashmap" resultType="com.example.test1.model.Student"> <!--1@: id= 다른 이름으로 설정해준다. 2@: 리턴타입이 Studnet-->
+		SELECT *
+		FROM STUDENT 
+		WHERE STU_NO = ${stuNo}  <!--보통 세미콜론을 붙이지 않는다.-->
+			
+	</select>
+	
+	
+</mapper>
