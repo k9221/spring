@@ -33,6 +33,11 @@ public class StudentController {
         return "/test";
     }
 	
+	@RequestMapping("/subject.do")  //자바 문법이기에 메소드명(함수)을 다르게 해준다. 하지만 오버로딩을 하면 동일한 이름을 가질 수도 있다.
+    public String subject(Model model) throws Exception{
+
+        return "/subject-list";
+    }
 	
 	@RequestMapping(value = "/list.dox", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
 	@ResponseBody
@@ -49,7 +54,14 @@ public class StudentController {
 	public String stu2(Model model, @RequestParam HashMap<String, Object> map) throws Exception {
 		HashMap<String, Object> resultMap = new HashMap<String, Object>();
 		resultMap = studentService.searchStuNo(map);
-		// {stu : {stuNo : 12345678 stuName : 옥한빛}, result : success} 
+		return new Gson().toJson(resultMap); // gson의 형태로 돌려줌 (고정)
+	}
+	
+	@RequestMapping(value = "/subject-list.dox", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
+	@ResponseBody
+	public String sub_list(Model model, @RequestParam HashMap<String, Object> map) throws Exception {
+		HashMap<String, Object> resultMap = new HashMap<String, Object>();
+		resultMap = studentService.searchSubject();
 		return new Gson().toJson(resultMap); // gson의 형태로 돌려줌 (고정)
 	}
 	

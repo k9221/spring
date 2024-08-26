@@ -15,7 +15,22 @@
 		<input type="text" placeholder="학번" v-model="stuNo">
 		<button @click="fnSearch()">검색</button>		
 		<hr>
-			{{stu.stuNo}}
+		<table v-for="item in index">
+			<tr>
+				<th>학번</th>
+				<th>이름</th>
+				<th>학과</th>
+				<th>학년</th>
+				<th>교실</th>
+				<th>성별</th>
+				<th>키</th>
+				<th>몸무게</th>
+			</tr>
+			<tr>
+				<th></th>
+			</tr>	
+			
+		</table>
 		
 		
 		

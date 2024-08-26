@@ -30,5 +30,11 @@
 			
 	</select>
 	
+	<select id="selectSubject" parameterType="hashmap" resultType="com.example.test1.model.Student"> <!--1@: id= 다른 이름으로 설정해준다. 2@: 리턴타입이 Studnet-->
+		SELECT * 
+		FROM SUBJECT <!--보통 세미콜론을 붙이지 않는다.-->
+				
+	</select>
+	
 	
 </mapper>

@@ -13,5 +13,9 @@ public interface StudentService {
 	
 	HashMap<String, Object> searchStuNo(HashMap<String, Object> map);
 
+	HashMap<String, Object> searchSubject();
+	
+	
+	
 	
 }
