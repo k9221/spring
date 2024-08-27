@@ -10,16 +10,18 @@ import com.example.test1.mapper.BoardMapper;
 import com.example.test1.model.Board;
 
 @Service
-public class BoardServiceImpl implements BoardService {
-	@Autowired // 내가 사용하지 않을 경우 자동 소멸됌. 또한 여러군대에서도 사용 가능하다.
-	BoardMapper BoardMapper;
+public class BoardServiceImpl implements BoardService{
+
+	@Autowired
+	BoardMapper boardMapper;
 	
 	@Override
 	public HashMap<String, Object> searchBoardList(HashMap<String, Object> map) {
 		// TODO Auto-generated method stub
-		HashMap<String, Object> resultMap = new HashMap<String, Object>();
 		
-		List<Board> list = BoardMapper.selectBoardList(map);
+		HashMap<String, Object> resultMap = 
+				new HashMap<String, Object>();
+		List<Board> list = boardMapper.selectBoardList(map);
 		resultMap.put("list", list);
 		resultMap.put("result", "success");
 		
@@ -28,49 +30,63 @@ public class BoardServiceImpl implements BoardService {
 
 	@Override
 	public HashMap<String, Object> removeBoard(HashMap<String, Object> map) {
-		HashMap<String, Object> resultMap = new HashMap<String, Object>();
-		
-		
+		// TODO Auto-generated method stub
+		HashMap<String, Object> resultMap =
+				new HashMap<String, Object>();
 		try {
-			BoardMapper.deleteBoard(map);
-			resultMap.put("message", "삭제되었습니다");
+			boardMapper.deleteBoard(map);
+			resultMap.put("message", "삭제되었습니다.");
 		} catch (Exception e) {
-			resultMap.put("fail", "예기치 못한 변수가 발생했습니다.");
 			// TODO: handle exception
+			resultMap.put("message", "예기치 못한 문제가 발생했습니다. \n나중에 다시 시도해주세요.");
 		}
+		
 		return resultMap;
 	}
 
 	@Override
 	public HashMap<String, Object> addBoard(HashMap<String, Object> map) {
-		HashMap<String, Object> resultMap = new HashMap<String, Object>();
-		
+		// TODO Auto-generated method stub
+		HashMap<String, Object> resultMap =
+				new HashMap<String, Object>();
 		try {
-			BoardMapper.insertBoard(map);
+			boardMapper.insertBoard(map);
 			resultMap.put("result", "success");
 			resultMap.put("message", "등록되었습니다.");
 		} catch (Exception e) {
-			resultMap.put("result", "fail");
-			resultMap.put("message", "예기치 못한 문제가 발생했습니다.");
 			// TODO: handle exception
+			resultMap.put("result", "fail");
+			resultMap.put("message", "예기치 못한 문제가 발생했습니다. \n나중에 다시 시도해주세요.");
 		}
 		return resultMap;
 	}
 
 	@Override
-	public HashMap<String, Object> searchBoard(HashMap<String, Object> map) {
+	public HashMap<String, Object> searchBoardInfo(HashMap<String, Object> map) {
+		// TODO Auto-generated method stub
 		HashMap<String, Object> resultMap = new HashMap<String, Object>();
+		System.out.println(map);
+		Board list = boardMapper.selectBoardInfo(map);
+		resultMap.put("list", list);
+		resultMap.put("result", "success");
+		
+		return resultMap;
+	}
+	@Override
+	public HashMap<String, Object> searchUserInfo(HashMap<String, Object> map) {
+		// TODO Auto-generated method stub
+		HashMap<String, Object> resultMap =	new HashMap<String, Object>();
 		try {
-			BoardMapper.selectBoard(map);
+			Board user = boardMapper.selectBoardInfo(map);
+			resultMap.put("infos", user);
 			resultMap.put("result", "success");
-			resultMap.put("message", "검색되었습니다.");
+			resultMap.put("message", "등록되었습니다.");
 		} catch (Exception e) {
-			resultMap.put("result", "fail");
-			resultMap.put("message", "예기치 못한 문제가 발생했습니다.");
 			// TODO: handle exception
+			resultMap.put("result", "fail");
+			resultMap.put("message", "예기치 못한 문제가 발생했습니다. \n나중에 다시 시도해주세요.");
 		}
 		return resultMap;
 	}
-
-
+	
 }

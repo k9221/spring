@@ -19,14 +19,12 @@
 </style>
 <body>
 	<div id="app">
-		<div>
-			제목 : <input type="text" placeholder="제목" v-model="title">
-		</div>
-		<br>
-		<div>
-			내용 : <textarea cols="30" rows="5" v-model="contents"></textarea>
-		</div>
-		<button @click="fnSave">저장</button>
+			<div>아이디:{{info.userId}}</div>
+			<div>비밀번호:{{info.pwd}}</div>
+			<div>이름:{{info.userName}}</div>
+			<div>이메일:{{info.phone}}</div>
+			<div>휴대폰번호:{{info.eMail}}</div>
+			<div>성별:{{info.gender}}</div>
 	</div>
 </body>
 </html>
@@ -34,32 +32,30 @@
     const app = Vue.createApp({
         data() {
             return {
-				list : [],
-				title : "",
-				contents : ""
+				userId : '${userId}',
+				info : {}
             };
         },
         methods: {
-            // fnSave 생성 후 board-add.dox 호출해서 저장
-			fnSave(){
+			fnGetList(){
 				var self = this;
-				var nparam = {title : self.title, contents : self.contents};
+				var nparmap = {userId : self.userId};
 				$.ajax({
-					url:"board-add.dox",
+					url:"user-view.dox",
 					dataType:"json",	
 					type : "POST", 
-					data : nparam,
+					data : nparmap,
 					success : function(data) { 
-						alert(data.message);
-						if(data.result == "success"){
-							location.href = "board-list.do"
-						}
+						console.log(data);
+						self.info = data.info;
 					}
 				});
-			}
+			},
+
         },
         mounted() {
-            var self = this;
+			var self = this;
+			self.fnGetList();
         }
     });
     app.mount('#app');

@@ -6,23 +6,23 @@
 	<meta charset="UTF-8">
 	<jsp:include page="/layout/menu.jsp"></jsp:include>
 	<title>첫번째 페이지</title>
-	
-	
 </head>
 <style>
-	table, tr, th, td{
-		border : 1px solid black;
-		padding : 10px 5px;  
-		border-collapse: collapse;
-		
+	table {
+		margin : 20px;
 	}
-	
+	table, tr, th, td {
+		border : 1px solid black;
+		padding : 5px 5px;
+		border-collapse: collapse;
+	}
 </style>
 <body>
 	<div id="app">
-		검색: <input type="text" placeholder="제목" v-model="keyword">
-		<button @click="fnGetList()">검색</button>	
-		
+		<div style="margin : 20px;"> 
+			검색 : <input placeholder="검색어" v-model="keyword">
+			<button @click="fnGetList">검색</button>
+		</div> 
 		<table>
 			<tr>
 				<th>게시글번호</th>
@@ -34,14 +34,13 @@
 			</tr>
 			<tr v-for="item in list">
 				<td>{{item.boardNo}}</td>
-				<td>{{item.title}}</td>
-				<td>{{item.userId}}</td>
+				<td><a href="#" @click="fnView(item.boardNo)">{{item.title}}</a></td>
+				<td><a href="#" @click="fnUser(item.userId)">{{item.userName}}</a></td>
 				<td>{{item.hit}}</td>
 				<td>{{item.cdateTime}}</td>
-				<td><button @click="fnDelete(item.boardNo)">삭제</button><td>
+				<td><button @click="fnRemove(item.boardNo)">삭제</button></td>
 			</tr>	
 		</table>
-		
 	</div>
 </body>
 </html>
@@ -49,8 +48,8 @@
     const app = Vue.createApp({
         data() {
             return {
-                keyword: "", // , 잘 찍어주기 (만약 안찍어줄 경우에는 아예 작동을 안하니 신경쓸 것!! 그리고 만드시 복습하자 ^^)!  
-				list : []
+				list : [],
+				keyword : ""
             };
         },
         methods: {
@@ -68,11 +67,9 @@
 					}
 				});
             },
-			
-			},
-			fnDelete(boardNo){
+			fnRemove(num) {
 				var self = this;
-				var nparmap = {boardNo : boardNo};
+				var nparmap = {boardNo : num};
 				$.ajax({
 					url:"board-remove.dox",
 					dataType:"json",	
@@ -83,8 +80,15 @@
 						self.fnGetList();
 					}
 				});
-						
 			},
+			fnView(boardNo){
+				$.pageChange("board-view.do", {boardNo : boardNo});
+				
+			},
+			fnUser(userId){
+				$.pageChange("user-view.do", {userId : userId});
+				
+			}
 			
         },
         mounted() {

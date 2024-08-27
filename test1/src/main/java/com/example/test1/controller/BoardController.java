@@ -1,7 +1,8 @@
 package com.example.test1.controller;
 
 import java.util.HashMap;
-import java.util.List;
+
+import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -12,65 +13,86 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.example.test1.dao.BoardService;
-import com.example.test1.model.Board;
 import com.google.gson.Gson;
 
 @Controller
 public class BoardController {
+
 	@Autowired
-	BoardService BoardService;
+	BoardService boardService;
 	
 	// 게시글 목록 페이지
-	@RequestMapping("/board-list.do") //내가 들어가는 사이트 주소
+	@RequestMapping("/board-list.do") 
     public String boardList(Model model) throws Exception{
 
-        return "/board-list"; // emp.do의 사이트로 이동할 경우 emp-list를 실행
+        return "/board-list";
     }
 	
 	// 게시글 작성
-	@RequestMapping("/board-insert.do") //내가 들어가는 사이트 주소
+	@RequestMapping("/board-insert.do") 
     public String boardInsert(Model model) throws Exception{
 
-        return "/board-insert"; // emp.do의 사이트로 이동할 경우 emp-list를 실행
+        return "/board-insert";
+    }
+
+	// 게시글 상세보기
+	@RequestMapping("/board-view.do") 
+    public String boardView(HttpServletRequest request, Model model, @RequestParam HashMap<String, Object> map) throws Exception{
+		System.out.println(map);		// request 객체에 담겨서 보드뷰에 보내준다		// ㄴ 파라미터로 받고 싶으면 RequestParam을 사용							
+		request.setAttribute("boardNo", map.get("boardNo"));
+		
+		return "/board-view";
+    }
+	@RequestMapping("/user-view.do") 
+    public String userView(HttpServletRequest request, Model model, @RequestParam HashMap<String, Object> map) throws Exception{
+		System.out.println("site" + map);		// request 객체에 담겨서 보드뷰에 보내준다		// ㄴ 파라미터로 받고 싶으면 RequestParam을 사용							
+		request.setAttribute("userId", map.get("userId"));
+		
+		return "/user-view";
     }
 	
+
 	
 	@RequestMapping(value = "/board-list.dox", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
 	@ResponseBody
-	public String boardList(Model model, @RequestParam HashMap<String, Object> map) throws Exception {
-		HashMap<String, Object> resultMap = new HashMap<String, Object>();
-		resultMap = BoardService.searchBoardList(map);
+	public String board_list(Model model, @RequestParam HashMap<String, Object> map) throws Exception {
+		HashMap<String, Object> resultMap 
+			= new HashMap<String, Object>();
+		resultMap = boardService.searchBoardList(map);
 		
-		return new Gson().toJson(resultMap); // gson의 형태로 돌려줌 (고정)
+		return new Gson().toJson(resultMap);
 	}
 	
 	@RequestMapping(value = "/board-remove.dox", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
 	@ResponseBody
 	public String board_remove(Model model, @RequestParam HashMap<String, Object> map) throws Exception {
-		HashMap<String, Object> resultMap = new HashMap<String, Object>();
-		resultMap = BoardService.removeBoard(map);
+		HashMap<String, Object> resultMap 
+			= new HashMap<String, Object>();
+		resultMap = boardService.removeBoard(map);
 		
-		return new Gson().toJson(resultMap); // gson의 형태로 돌려줌 (고정)
+		return new Gson().toJson(resultMap);
 	}
 	
 	@RequestMapping(value = "/board-add.dox", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
 	@ResponseBody
 	public String board_add(Model model, @RequestParam HashMap<String, Object> map) throws Exception {
 		HashMap<String, Object> resultMap = new HashMap<String, Object>();
-		resultMap = BoardService.addBoard(map);
+		resultMap = boardService.addBoard(map);
 		
-		return new Gson().toJson(resultMap); // gson의 형태로 돌려줌 (고정)
+		return new Gson().toJson(resultMap);
 	}
 	
-	@RequestMapping(value = "/searchBoard.dox", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
+	@RequestMapping(value = "/board-view.dox", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
 	@ResponseBody
-	public String searchBoard(Model model, @RequestParam HashMap<String, Object> map) throws Exception {
-		HashMap<String, Object> resultMap = new HashMap<String, Object>();
-		resultMap = BoardService.searchBoard(map);
+	public String board_view(Model model, @RequestParam HashMap<String, Object> map) throws Exception {
+		HashMap<String, Object> resultMap 
+			= new HashMap<String, Object>();
+		resultMap = boardService.searchBoardInfo(map);
 		
-		return new Gson().toJson(resultMap); // gson의 형태로 돌려줌 (고정)
+		return new Gson().toJson(resultMap);
+	
 	}
 	
-	
+
 	
 }

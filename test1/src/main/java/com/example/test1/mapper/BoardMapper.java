@@ -17,9 +17,13 @@ public interface BoardMapper {
 	// 게시글 등록
 	void insertBoard(HashMap<String, Object> map);
 	
-	// 게시글 검색
-	void selectBoard(HashMap<String, Object> map);
+	// 게시글 상세조회
+	Board selectBoardInfo(HashMap<String, Object> map);
 	
 	
 	
+	// 유저 정보조회
+	Board selectUser(HashMap<String, Object> map);
+	
+
 }
