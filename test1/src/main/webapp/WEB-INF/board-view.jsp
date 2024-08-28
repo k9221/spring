@@ -18,12 +18,12 @@
 	}
 </style>
 <body>
-	<div id="app">
-			<div>제목:{{list.title}}</div>
-			<div>내용:{{list.contents}}</div>
-			<div>작성자:{{list.userId}}</div>
-			<div>조회수:{{list.hit}}</div>
-			<div>작성일:{{list.cdateTime}}</div>
+	<div id="app" v-for="item in list">
+			<div>제목:{{item.title}}</div>
+			<div>내용:{{item.contents}}</div>
+			<div>작성자:{{item.userId}}</div>
+			<div>조회수:{{item.hit}}</div>
+			<div>작성일:{{item.cdateTime}}</div>
 	</div>
 </body>
 </html>
@@ -47,7 +47,6 @@
 					data : nparmap,
 					success : function(data) { 
 						console.log(data);
-						self.list = data.list;
 					}
 				});
 			},

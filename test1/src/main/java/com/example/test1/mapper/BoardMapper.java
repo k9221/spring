@@ -19,9 +19,7 @@ public interface BoardMapper {
 	
 	// 게시글 상세조회
 	Board selectBoardInfo(HashMap<String, Object> map);
-	
-	
-	
+
 	// 유저 정보조회
 	Board selectUser(HashMap<String, Object> map);
 	

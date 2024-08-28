@@ -43,7 +43,7 @@ public class BoardController {
 		
 		return "/board-view";
     }
-	@RequestMapping("/user-view.do") 
+	@RequestMapping("/user-view2.do") 
     public String userView(HttpServletRequest request, Model model, @RequestParam HashMap<String, Object> map) throws Exception{
 		System.out.println("site" + map);		// request 객체에 담겨서 보드뷰에 보내준다		// ㄴ 파라미터로 받고 싶으면 RequestParam을 사용							
 		request.setAttribute("userId", map.get("userId"));
@@ -56,8 +56,7 @@ public class BoardController {
 	@RequestMapping(value = "/board-list.dox", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
 	@ResponseBody
 	public String board_list(Model model, @RequestParam HashMap<String, Object> map) throws Exception {
-		HashMap<String, Object> resultMap 
-			= new HashMap<String, Object>();
+		HashMap<String, Object> resultMap = new HashMap<String, Object>();	
 		resultMap = boardService.searchBoardList(map);
 		
 		return new Gson().toJson(resultMap);

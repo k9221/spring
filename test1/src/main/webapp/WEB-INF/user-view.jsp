@@ -18,13 +18,14 @@
 	}
 </style>
 <body>
-	<div id="app">
-			<div>아이디:{{info.userId}}</div>
-			<div>비밀번호:{{info.pwd}}</div>
-			<div>이름:{{info.userName}}</div>
-			<div>이메일:{{info.phone}}</div>
-			<div>휴대폰번호:{{info.eMail}}</div>
-			<div>성별:{{info.gender}}</div>
+	<div id="app" v-for="item in user">
+			<div>아이디:{{user.userId}}</div>
+			<div>비밀번호:{{user.pwd}}</div>
+			<div>이름:{{user.userName}}</div>
+			<div>이메일:{{user.eMil}}</div>
+			<div>휴대폰번호:{{user.phone}}</div>
+			<div>성별:{{user.gender}}</div>
+			<div><button @click="fnRemove(userId)">삭제</button><div>
 	</div>
 </body>
 </html>
@@ -33,7 +34,8 @@
         data() {
             return {
 				userId : '${userId}',
-				info : {}
+				user : {}
+			
             };
         },
         methods: {
@@ -47,10 +49,26 @@
 					data : nparmap,
 					success : function(data) { 
 						console.log(data);
-						self.info = data.info;
+						self.user = data.user;
 					}
 				});
 			},
+			fnRemove(userId) {
+				var self = this;
+				var nparmap = {userId : userId};
+				if(!confirm("삭제하겠습니까?")){
+					return;
+				};
+				$.ajax({
+					url:"user-remove.dox",
+					dataType:"json",	
+					type : "POST", 
+					data : nparmap,
+					success : function(data) { 
+						$.pageChange("user-list.do", {});
+					}
+				});
+			}
 
         },
         mounted() {
