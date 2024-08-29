@@ -18,9 +18,8 @@ public class BoardServiceImpl implements BoardService{
 	@Override
 	public HashMap<String, Object> searchBoardList(HashMap<String, Object> map) {
 		// TODO Auto-generated method stub
-		
-		HashMap<String, Object> resultMap = 
-				new HashMap<String, Object>();
+		System.out.println(map);
+		HashMap<String, Object> resultMap = new HashMap<String, Object>();
 		List<Board> list = boardMapper.selectBoardList(map);
 		resultMap.put("list", list);
 		resultMap.put("result", "success");

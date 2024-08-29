@@ -21,6 +21,12 @@ public class User {
 	private String noticeYn;
 	private String cdateTime;
 	private String udateTime;
+	public String getUserId() {
+		return userId;
+	}
+	public String getPwd() {
+		return pwd;
+	}
 	
 	
 	

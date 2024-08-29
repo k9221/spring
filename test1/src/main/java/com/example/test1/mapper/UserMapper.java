@@ -23,4 +23,6 @@ public interface UserMapper {
 	User selectUserInfo(HashMap<String, Object> map);
 	// 유저정보 등록
 	void insertUser(HashMap<String, Object> map);
+	//
+	User selectUserLogin(HashMap<String, Object> map);
 }

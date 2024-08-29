@@ -7,13 +7,24 @@
 	<select id="selectUserIdCheck" parameterType="hashmap" resultType="com.example.test1.model.User">
 		SELECT *
 		FROM TBL_USER
-		WHERE U.USERID = #{userId}
+		WHERE USERID = #{userId}
 	</select>
 	<!--검색시 찾기-->
 	<select id="selectUserList" parameterType="hashmap" resultType="com.example.test1.model.User">
 		SELECT *
 		FROM TBL_USER
-		WHERE USERID LIKE '%' || #{keyword} || '%' 
+		WHERE 
+		<if test="searchOption == 'all'">
+			USERID LIKE '%' || #{keyword} || '%'
+			OR EMAIL LIKE '%' || #{keyword} || '%'
+		</if>
+		<if test="searchOption == 'id'">
+			USERID LIKE '%' || #{keyword} || '%'
+		</if>
+		<if test="searchOption == 'email'">
+			EMAIL LIKE '%' || #{keyword} || '%'
+		</if>
+		
 	</select>
 	<!--보드 리스트 조회-->
 	<select id="selectBoardList" parameterType="hashmap" resultType="com.example.test1.model.User">
@@ -38,5 +49,13 @@
 		INSERT INTO TBL_USER(USERID, PWD, USERNAME, EMAIL, PHONE, GENDER) 
 		VALUES(#{userId}, #{pwd}, #{userName}, #{eMail}, #{phone}, #{gender})
 	</insert>
+	
+	<select id="selectUserLogin" parameterType="hashmap" resultType="com.example.test1.model.User">
+		SELECT *
+		FROM TBL_USER
+		WHERE 
+		USERID = #{userId} AND PWD = #{pwd}  
+	</select>
+	
 	
 </mapper>

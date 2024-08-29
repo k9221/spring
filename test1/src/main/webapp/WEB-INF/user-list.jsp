@@ -21,6 +21,11 @@
 	<div id="app">
 		<button @click="fnBoardList">게시글 목록</button>
 		<div>
+			<select style="margin-right : 5px;" v-model="searchOption">
+				<option value="all">::전체::</option>
+				<option value="id">아이디</option>
+				<option value="email">이메일</option>
+			</select>
 			<input placerholder="검색" v-model="keyword">
 			<button @click="fnUserList">검색</button>
 		<div>
@@ -53,21 +58,25 @@
             return {
 				list: [],
 				boardList: [],
-				keyword: ""
+				keyword: "",
+				searchOption: "all"
 		
             };
         },
         methods: {
             fnUserList(){
 				var self = this;
-				var nparmap = {keyword: self.keyword};
+				var nparmap = {
+					keyword: self.keyword,
+					searchOption : self.searchOption
+				};
 				$.ajax({
 					url:"user-list.dox",
 					dataType:"json",	
 					type : "POST", 
 					data : nparmap,
 					success : function(data) {
-						console.log(data);
+						console.log("data: " +data);
 						self.list = data.list;
 					}
 				});

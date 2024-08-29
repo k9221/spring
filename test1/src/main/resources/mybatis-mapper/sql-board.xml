@@ -13,9 +13,36 @@
 		SELECT *
 		FROM TBL_BOARD B
 		INNER JOIN TBL_USER U ON B.USERID = U.USERID
-		WHERE TITLE LIKE '%' || #{keyword} || '%'
+		WHERE 1=1
+		<if test="category != '' and category != null"> 
+			AND CATEGORY = #{category}
+		</if>
+		<if test="searchOption == 'all'">
+			 AND (TITLE LIKE '%' || #{keyword} || '%'
+			OR USERNAME LIKE '%' || #{keyword} || '%')
+		</if>
+		<if test="searchOption == 'title'">
+			AND TITLE LIKE '%' || #{keyword} || '%'
+		</if>
+		<if test="searchOption == 'name'">
+			AND USERNAME LIKE '%' || #{keyword} || '%'
+		</if>
+		
+		<!--		<choose>
+			<when test="searchOption == 'title'">
+				TITLE LIKE '%' || #{keyword} || '%'
+			</when>
+			<when test="searchOption == 'name'">
+				USERNAME LIKE '%' || #{keyword} || '%'
+			</when>
+			<otherwise>
+				TITLE LIKE '%' || #{keyword} || '%'
+				OR USERNAME LIKE '%' || #{keyword} || '%'
+			</otherwise>
+		</choose> 이런 방식으로도 사용 가능하다.-->
+		
 	</select>
-	
+		
 	<delete id="deleteBoard" parameterType="hashmap">
 		DELETE 
 		FROM TBL_BOARD

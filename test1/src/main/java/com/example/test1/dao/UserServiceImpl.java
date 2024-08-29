@@ -3,6 +3,8 @@ package com.example.test1.dao;
 import java.util.HashMap;
 import java.util.List;
 
+import javax.servlet.http.HttpSession;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -14,6 +16,9 @@ import com.example.test1.model.User;
 public class UserServiceImpl implements UserService {
 	@Autowired // 내가 사용하지 않을 경우 자동 소멸됌. 또한 여러군대에서도 사용 가능하다.
 	UserMapper userMapper;
+	
+	@Autowired // 
+	HttpSession session;
 
 	@Override
 	public HashMap<String, Object> searchUserIdCheck(HashMap<String, Object> map) {
@@ -38,7 +43,7 @@ public class UserServiceImpl implements UserService {
 		HashMap<String, Object> resultMap = new HashMap<String, Object>();
 			
 		try {
-			System.out.println(map);
+			System.out.println("dd" + map);
 			List<User> list = userMapper.selectUserList(map);
 			resultMap.put("list", list);
 			resultMap.put("result", "success");
@@ -113,6 +118,34 @@ public class UserServiceImpl implements UserService {
 		}
 		return resultMap;
 		
+	}
+	
+	@Override
+	public HashMap<String, Object> searchUserLogin(HashMap<String, Object> map) {
+		HashMap<String, Object> resultMap = new HashMap<String, Object>();
+		try {
+			User user = userMapper.selectUserLogin(map);
+
+			if(user == null) {
+				resultMap.put("result", "fail");
+				User idCheck = userMapper.selectUserIdCheck(map);
+				System.out.println("map" + map);
+				if(idCheck == null) {
+					resultMap.put("message", "없는 아이디 입니다.");
+				} else {
+					resultMap.put("message", "비밀번호를 다시 확인해주세요");
+				}
+			} else { 
+				resultMap.put("result", "success");
+				resultMap.put("message", "로그인이 완료되었습니다.");
+			}
+		} catch (Exception e) {
+			// TODO: handle exception
+			System.out.println("Exception: "+ e); //이거좋다!!!!!!!!!!!
+			resultMap.put("result", "fail");
+			resultMap.put("message", "문제가 발생하였습니다, 다시 시도해 주세요");
+		}
+		return resultMap;
 	}
 
 

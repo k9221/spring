@@ -19,5 +19,8 @@ public interface UserService {
 	
 	HashMap<String,Object> addUser(HashMap<String,Object> map);
 	
+	HashMap<String,Object> searchUserLogin(HashMap<String,Object> map);
+	
+	
 	
 }
