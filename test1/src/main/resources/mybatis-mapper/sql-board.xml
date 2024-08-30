@@ -66,4 +66,6 @@
 		WHERE USERID = #{userId}
 	</select>
 	
+	
+	
 </mapper>

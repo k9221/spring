@@ -76,9 +76,6 @@
             };
         },
         methods: {
-			fnInsert(){
-			location.href="board-insert.do";	
-			},
 			fnCategory(category){
 				var self = this;
 				self.category = category;
