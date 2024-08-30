@@ -17,7 +17,7 @@ public class UserServiceImpl implements UserService {
 	@Autowired // 내가 사용하지 않을 경우 자동 소멸됌. 또한 여러군대에서도 사용 가능하다.
 	UserMapper userMapper;
 	
-	@Autowired // 
+	@Autowired // 세션 정보 
 	HttpSession session;
 
 	@Override
@@ -119,13 +119,13 @@ public class UserServiceImpl implements UserService {
 		return resultMap;
 		
 	}
-	
+	// JWT 방식도 있다.
 	@Override
 	public HashMap<String, Object> searchUserLogin(HashMap<String, Object> map) {
 		HashMap<String, Object> resultMap = new HashMap<String, Object>();
 		try {
 			User user = userMapper.selectUserLogin(map);
-
+			
 			if(user == null) {
 				resultMap.put("result", "fail");
 				User idCheck = userMapper.selectUserIdCheck(map);
@@ -138,6 +138,10 @@ public class UserServiceImpl implements UserService {
 			} else { 
 				resultMap.put("result", "success");
 				resultMap.put("message", "로그인이 완료되었습니다.");
+				session.setAttribute("sessionId", user.getUserId());
+				session.setAttribute("sessionName", user.getUserName());
+				session.setAttribute("sessionStatus", user.getStatus());
+				session.setAttribute("sessionEmail", user.geteMail());
 			}
 		} catch (Exception e) {
 			// TODO: handle exception

@@ -18,12 +18,16 @@
 	}
 </style>
 <body>
-	<div id="app" v-for="item in list">
-			<div>제목:{{item.title}}</div>
-			<div>내용:{{item.contents}}</div>
-			<div>작성자:{{item.userId}}</div>
-			<div>조회수:{{item.hit}}</div>
-			<div>작성일:{{item.cdateTime}}</div>
+	<div id="app">
+		<div>제목:{{info.title}}</div>
+		<div>내용:{{info.contents}}</div>
+		<div>작성자:{{info.userId}}</div>
+		<div>조회수:{{info.hit}}</div>
+		<div>작성일:{{info.cdateTime}}</div>
+		<div>이메일:{{info.eMail}}</div>
+		<div v-if="sessionId == info.sessionId || sessionStatus == 'A'">
+			<button @click="fnRemove">삭제</button>
+		</div>		
 	</div>
 </body>
 </html>
@@ -32,7 +36,9 @@
         data() {
             return {
 				boardNo : '${boardNo}',
-				list : {boardNo}
+				info : {},
+				sessionId : '${sessionId}',
+				sessionStatus : '${sessionStatus}'
 			
             };
         },
@@ -47,13 +53,14 @@
 					data : nparmap,
 					success : function(data) { 
 						console.log(data);
+						self.info = data.info;
 					}
 				});
-			},
+			}
 
         },
         mounted() {
-			var sele = this;
+			var self = this;
 			self.fnGetList();
         }
     });

@@ -6,16 +6,35 @@
 	<meta charset="UTF-8">
 	<jsp:include page="/layout/menu.jsp"></jsp:include>
 	<title>첫번째 페이지</title>
-	
-	
 </head>
 <style>
+	table {
+		margin : 20px;
+	}
+	table, tr, th, td {
+		border : 1px solid black;
+		padding : 5px 5px;
+		border-collapse: collapse;
+	}
 </style>
 <body>
 	<div id="app">
-		
-		<button type="button" @click="fnSearch()">검색</button>
-		<div v-if="vs">{{list}}</div>
+		<table>
+			<tr>
+				<th>학번</th>
+				<th>이름</th>
+				<th>아이디</th>
+				<th>학년</th>
+				<th>주민번호</th>
+			</tr>
+			<tr v-for="item in list">
+				<td>{{item.stuNo}}</td>
+				<td>{{item.name}}</td>
+				<td>{{item.id}}</td>
+				<td>{{item.grade}}</td>
+				<td>{{item.jumin}}</td>
+			</tr>	
+		</table>
 	</div>
 </body>
 </html>
@@ -23,18 +42,17 @@
     const app = Vue.createApp({
         data() {
             return {
-                name : "홍길동", // , 잘 찍어주기 (만약 안찍어줄 경우에는 아예 작동을 안하니 신경쓸 것!! 그리고 만드시 복습하자 ^^)!  
-				list : {},
-				vs : true
-            };
+				list : [],
+           
+			 };
         },
         methods: {
             fnGetList(){
 				var self = this;
-				var nparmap = {};
-			
+				var nparmap = {		
+				};
 				$.ajax({
-					url:"empList.dox",
+					url:"school-list.dox",
 					dataType:"json",	
 					type : "POST", 
 					data : nparmap,
@@ -43,23 +61,8 @@
 						self.list = data.list;
 					}
 				});
-            },
-			fnSearch(){
-				this.vs = !this.vs;  
-				var self = this;
-				var nparmap = {};
-				$.ajax({
-					url:"empList.dox",
-					dataType:"json",	
-					type : "POST", 
-					data : nparmap,
-					success : function(data) { 
-						console.log(data);
-						self.list = data.list;
-					}
-				});
-				
-			}
+            }
+
         },
         mounted() {
             var self = this;

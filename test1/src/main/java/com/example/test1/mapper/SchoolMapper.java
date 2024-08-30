@@ -5,10 +5,12 @@ import java.util.List;
 
 import org.apache.ibatis.annotations.Mapper;
 
-import com.example.test1.model.Emp;
+import com.example.test1.model.School;
 
 @Mapper
-public interface EmpMapper {
-	List<Emp> selectEmpList(HashMap<String, Object> map);
+public interface SchoolMapper {
+	List<School> selectSchoolList(HashMap<String, Object> map);
+	
+	
 
 }

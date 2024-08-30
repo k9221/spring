@@ -3,6 +3,8 @@ package com.example.test1.dao;
 import java.util.HashMap;
 import java.util.List;
 
+import javax.servlet.http.HttpSession;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -14,6 +16,9 @@ public class BoardServiceImpl implements BoardService{
 
 	@Autowired
 	BoardMapper boardMapper;
+	
+	@Autowired // 세션 정보 
+	HttpSession session;
 	
 	@Override
 	public HashMap<String, Object> searchBoardList(HashMap<String, Object> map) {
@@ -46,12 +51,17 @@ public class BoardServiceImpl implements BoardService{
 	@Override
 	public HashMap<String, Object> addBoard(HashMap<String, Object> map) {
 		// TODO Auto-generated method stub
-		HashMap<String, Object> resultMap =
-				new HashMap<String, Object>();
+		HashMap<String, Object> resultMap = new HashMap<String, Object>();
 		try {
+			
 			boardMapper.insertBoard(map);
+			
 			resultMap.put("result", "success");
 			resultMap.put("message", "등록되었습니다.");
+			session.getAttribute("sessionId");
+			session.getAttribute("sessionEmail");
+		
+			
 		} catch (Exception e) {
 			// TODO: handle exception
 			resultMap.put("result", "fail");
@@ -65,8 +75,8 @@ public class BoardServiceImpl implements BoardService{
 		// TODO Auto-generated method stub
 		HashMap<String, Object> resultMap = new HashMap<String, Object>();
 		System.out.println(map);
-		Board list = boardMapper.selectBoardInfo(map);
-		resultMap.put("list", list);
+		Board info = boardMapper.selectBoardInfo(map);
+		resultMap.put("info", info);
 		resultMap.put("result", "success");
 		
 		return resultMap;

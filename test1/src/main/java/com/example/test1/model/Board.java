@@ -17,12 +17,18 @@ public class Board {
 	private String noticeYn;
 	private String cdateTime;
 	private String udateTime;
-	//tbl_user 테이블
 	
+	//tbl_user 테이블
 	private String pwd;
 	private String userName;
 	private String eMail;
 	private String phone;
 	private String gender;
+	
+	public String getUserId() {
+		return userId;
+	}
+
+
 	
 }

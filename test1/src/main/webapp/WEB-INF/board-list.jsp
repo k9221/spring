@@ -49,9 +49,16 @@
 				<td><a href="#" @click="fnUser(item.userId)">{{item.userName}}</a></td>
 				<td>{{item.hit}}</td>
 				<td>{{item.cdateTime}}</td>
-				<td><button @click="fnRemove(item.boardNo)">삭제</button></td>
+				<td >
+					<template v-if="item.userId == sessionId || sessionStatus == 'A'">
+					<button @click="fnRemove(item.boardNo)">삭제</button>
+					</template>
+				</td>
 			</tr>	
 		</table>
+		<div>
+			<button @click="fnInsert">작성하기</button>
+		</div>	
 	</div>
 </body>
 </html>
@@ -62,10 +69,16 @@
 				list : [],
 				keyword : "",
 				searchOption : "all",
-				category : ""
+				category : "",
+				sessionId : '${sessionId}',
+				sessionStatus : '${sessionStatus}',
+
             };
         },
         methods: {
+			fnInsert(){
+			location.href="board-insert.do";	
+			},
 			fnCategory(category){
 				var self = this;
 				self.category = category;
@@ -103,7 +116,10 @@
 						self.fnGetList();
 					}
 				});
-			}
+			},
+			fnView(boardNo){
+				$.pageChange("board-view.do", {boardNo : boardNo});
+			},
         },
         mounted() {
             var self = this;

@@ -9,6 +9,8 @@ public class User {
 	private String eMail;
 	private String phone;
 	private String gender;
+	private String status;
+	
 	
 	private String boardNo;
 	private String title;
@@ -24,9 +26,17 @@ public class User {
 	public String getUserId() {
 		return userId;
 	}
-	public String getPwd() {
-		return pwd;
+	public String getUserName() {
+		return userName;
 	}
+	public String getStatus() {
+		return status;
+	}
+	
+	public String geteMail() {
+		return eMail;
+	}
+
 	
 	
 	

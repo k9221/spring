@@ -46,7 +46,6 @@
 					success : function(data) { 
 						if(data.result == "success"){
 							location.href = "board-list.do"
-							$pageChange("board-list.do", {})
 						} else {
 							alert(data.message)
 						}
@@ -56,6 +55,8 @@
 
 		},
         mounted() {
+			var self = this;
+			self.fnLogin();
         },
     });
     app.mount('#app');
