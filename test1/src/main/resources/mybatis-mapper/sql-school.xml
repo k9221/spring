@@ -14,7 +14,7 @@
 		INNER JOIN PROFESSOR P ON S.PROFNO = P.PROFNO
 		INNER JOIN DEPARTMENT D1 ON P.DEPTNO = D1.DEPTNO
 		INNER JOIN DEPARTMENT D2 ON D1.PART = D2.DEPTNO
-		WHERE STUNO = #{stuNo}
+		WHERE S.STUNO = #{stuNo} 
 	</select>
 
 	<delete id="deleteSchool" parameterType="hashmap">
@@ -27,6 +27,8 @@
 		INSERT INTO STU(STUNO, NAME, ID, JUMIN) 
 		VALUES(#{stuNo}, #{name}, #{id}, #{jumin})
 	</insert>
+	
+	
 	
 	
 

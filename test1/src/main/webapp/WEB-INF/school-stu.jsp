@@ -47,7 +47,6 @@
         data() {
             return {
 				list : []
-           
 			 };
         },
         methods: {

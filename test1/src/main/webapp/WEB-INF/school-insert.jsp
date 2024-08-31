@@ -30,7 +30,7 @@
 <body>
 	<div id="app">
 		
-		<table>
+		<table >
 			<tr>
 				<th>학번 
 					<td>
@@ -46,7 +46,7 @@
 				</th>
 			</tr>
 			<tr>
-				<th>아이디 
+				<th>아이디
 					<td>
 						<input id="id" placeholder="아이디" v-model="id">
 					<td>
@@ -68,17 +68,28 @@
     const app = Vue.createApp({
         data() {
             return {
-				list : [],
-				stuNo : "",
-				name : "",
-				id : "",
-				jumin : ""
+				info : {},
+				stuNo : '${stuNo}',
+				name : '${name}',
+				id :'${id}',
+				jumin : '${jumin}'
 				
             };
         },
         methods: {
 			fnGetList(){
-				
+				var self = this;
+				var nparmap = {stuNo : self.stuNo};
+				$.ajax({
+					url:"school-view.dox",
+					dataType:"json",	
+					type : "POST", 
+					data : nparmap,
+					success : function(data) { 
+						console.log(data);
+						self.info = data.info;
+					}
+				});
 			},
 			fnSave(){
 				var self = this;

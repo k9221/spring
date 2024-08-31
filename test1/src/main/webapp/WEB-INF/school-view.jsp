@@ -42,7 +42,7 @@
 				var self = this;
 				var nparmap = {stuNo : self.stuNo};
 				$.ajax({
-					url:"/school-view.dox",
+					url:"school-view.dox",
 					dataType:"json",	
 					type : "POST", 
 					data : nparmap,
